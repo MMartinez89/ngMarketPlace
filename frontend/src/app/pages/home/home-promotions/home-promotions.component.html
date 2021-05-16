@@ -1,0 +1,23 @@
+<!--=====================================
+    	Home Promotions
+======================================-->
+
+<div *ngIf ="!preLoad"
+ class="ps-promotions">
+  <div class="container">
+    <div class="row">
+
+      <div *ngFor="let banner of banner_default;let i = index; let lastIndex = last" class="col-md-6 col-12">
+        <a class="ps-collection" routerLink="product/{{url[i]}}">
+          <img src="assets/img/products/{{category[i]}}/default/{{banner}}" alt="" />
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- End Home Promotions-->
+ <!--PRELOAD-->
+ <div *ngIf = "preLoad" class = "d-flex justify-content-center">
+  <div class="spinner-border text-muted my-5"></div>
+</div>
