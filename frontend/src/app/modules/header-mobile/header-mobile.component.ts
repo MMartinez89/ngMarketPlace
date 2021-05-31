@@ -17,7 +17,7 @@ export class HeaderMobileComponent implements OnInit {
    fireBase:string =  environment.fireBase;
    categories: any;
    render:boolean = true;
-   categoriesList:Array<any> = [];
+   categoriesList:any[] = [];
   constructor(private categoriaService: CategoriesService,
               private subCategoriesService: SubCategoriesService) { }
 

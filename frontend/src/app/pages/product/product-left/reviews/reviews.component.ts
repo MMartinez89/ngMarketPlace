@@ -13,10 +13,10 @@ export class ReviewsComponent implements OnInit {
 
   @Input() childItem: any;
   constructor() { }
-  rating: Array<any>=[];
-  reviews: Array<any>= [];
+  rating: any[]=[];
+  reviews: any[]= [];
   totalReviews: string = "";
-  itemsReview:Array<any>=[];
+  itemsReview:any[]=[];
   render:boolean = true;
   ngOnInit(): void {
 

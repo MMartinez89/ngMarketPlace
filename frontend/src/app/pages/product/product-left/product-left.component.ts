@@ -10,14 +10,14 @@ import{DinamicPrice,DinamicRating,DinamicReviews, Rating, CountDown,ProgressBar,
 })
 export class ProductLeftComponent implements OnInit {
 
-  product:Array<any> = [];
+  product:any[] = [];
   cargando: boolean = false;
-  rating:Array<any>=[];
-  reviews:Array<any>=[];
-  price:Array<any>=[];
+  rating:any[]=[];
+  reviews:any[]=[];
+  price:any[]=[];
   render:boolean = true;
-  count:Array<any> = [];
-  gallery: Array<any> = [];
+  count:any[] = [];
+  gallery: any[] = [];
   renderGallery: boolean = true;
   video: string ="";
   tags: string = "";

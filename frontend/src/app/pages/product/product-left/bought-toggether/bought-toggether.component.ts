@@ -13,8 +13,8 @@ declare var JQuery:any;
 export class BoughtToggetherComponent implements OnInit {
 
   @Input() childItem: any; 
-  products: Array<any>=[];
-  price: Array<any>=[];
+  products: any[]=[];
+  price: any[]=[];
   render:boolean =  true;
 
   constructor(private producService: ProductsService) { }

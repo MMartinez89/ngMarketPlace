@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
   //path:string = Path.url;
   fireBase: string = environment.fireBase;
   categories: any;
-  arrayTitleList: Array<any> = [];
+  arrayTitleList: any[] = [];
   render: boolean = true;
 
   constructor(private categoriesService: CategoriesService,

@@ -5,6 +5,10 @@ import {ProductsComponent} from './pages/products/products.component';
 import {ProductComponent} from './pages/product/product.component';
 import {SearchComponent} from './pages/search/search.component'
 import {Error404Component} from './pages/error404/error404.component';
+import { LoginComponent } from './pages/login/login.component';
+import {RegisterComponent} from './pages/register/register.component';
+import {AccountComponent} from './pages/account/account.component';
+import {AuthGuard} from './guards/auth.guard';
 
 
 const routes: Routes = [
@@ -12,6 +16,9 @@ const routes: Routes = [
   {path: 'products/:param', component:ProductsComponent},
   {path:'product/:param', component: ProductComponent},
   {path:'search/:param', component:SearchComponent},
+  {path:'login', component:LoginComponent},
+  {path:'register', component:RegisterComponent},
+  {path:'account', component:AccountComponent, canActivate:[AuthGuard]},
   {path: '**', pathMatch:'full', component:Error404Component}
 ];
 

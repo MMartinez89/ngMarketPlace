@@ -11,20 +11,20 @@ declare var $:any;
 })
 export class ProductsShowcaseComponent implements OnInit {
 
-  products:Array<any>=[];
-  render: Boolean = true;
+  products:any[]=[];
+  render: boolean = true;
   cargando: Boolean = false;
-  rating: Array<any>=[];
-  reviews: Array<any>=[];
-  price: Array<any>=[];
+  rating: any[]=[];
+  reviews: any[]=[];
+  price: any[]=[];
   params:string = "";
   page:any;
-  productFound: Number = 0;
+  productFound: number = 0;
   currenRoute: string = "";
-  totalPage: Number = 0;
+  totalPage: number = 0;
   sort:any;
-  sortItems:Array<any> = [];
-  sortValues: Array<any>=[];
+  sortItems:any[] = [];
+  sortValues: any[]=[];
 
   constructor(private productsService: ProductsService, private activatedRoute: ActivatedRoute) { }
 

@@ -14,7 +14,7 @@ export class HeaderPromotionComponent implements OnInit {
 
   top_banner:any;
   category: any;
-  preLoad: Boolean = false;
+  preLoad: boolean = false;
   url: any;
 
   constructor(private productsService: ProductsService) { }

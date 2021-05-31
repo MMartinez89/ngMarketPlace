@@ -10,10 +10,10 @@ import{Rating, DinamicPrice,DinamicReviews, DinamicRating} from '../../../functi
 })
 export class ProductRightComponent implements OnInit {
 
-  products:Array<any>=[];
-  rating: Array<any> = [];
-  reviews: Array<any> = [];
-  price: Array<any> = [];
+  products:any[]=[];
+  rating: any[] = [];
+  reviews: any[] = [];
+  price: any[] = [];
   render: boolean =  true;
   cargando: boolean = false;
   constructor(private productsService: ProductsService, private activatedRoute: ActivatedRoute) { }

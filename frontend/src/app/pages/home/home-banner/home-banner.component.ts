@@ -10,9 +10,9 @@ import {OwlCarouselConfig, BackgroundImage} from '../../../function';
 })
 export class HomeBannerComponent implements OnInit {
 
-  banner_home: Array<any> = [];
-  category: Array<any> = [];
-  url: Array<any> = [];
+  banner_home: any[] = [];
+  category: any[] = [];
+  url: any[]= [];
   render: boolean = true;
   preLoad: boolean = false;
   constructor( private productsService: ProductsService) { }

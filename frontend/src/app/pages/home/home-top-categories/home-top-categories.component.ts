@@ -8,7 +8,7 @@ import {CategoriesService} from '../../../service/categories.service';
 })
 export class HomeTopCategoriesComponent implements OnInit {
 
-  categories:Array<any>=[]
+  categories:any[]=[]
   cargando:boolean = false;
 
   constructor(private categoriesService: CategoriesService) { }

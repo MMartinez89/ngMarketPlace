@@ -12,7 +12,7 @@ declare var $:any;
 })
 export class FooterComponent implements OnInit {
 
-  categoriesList:Array<any>=[]
+  categoriesList:any[]=[]
   categories:any;
   render: boolean =  true;
   constructor(private categoriesService: CategoriesService,

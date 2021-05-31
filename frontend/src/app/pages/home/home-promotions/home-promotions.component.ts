@@ -8,10 +8,10 @@ import {ProductsService} from '../../../service/products.service'
 })
 export class HomePromotionsComponent implements OnInit {
 
-  banner_default:Array<any>= [];
-  category:Array<any>=[];
-  url:Array<any>=[];
-  preLoad:Boolean =  false;
+  banner_default:any[]= [];
+  category:any[]=[];
+  url:any[]=[];
+  preLoad:boolean =  false;
   constructor(private productService: ProductsService) { }
 
   ngOnInit(): void {

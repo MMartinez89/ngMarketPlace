@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 
 import {HttpClientModule} from '@angular/common/http'
 
+import { FormsModule } from '@angular/forms';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './modules/header/header.component';
 import { HeaderPromotionComponent } from './modules/header-promotion/header-promotion.component';
@@ -38,6 +40,9 @@ import { VendorStoreComponent } from './pages/product/product-left/vendor-store/
 import { ReviewsComponent } from './pages/product/product-left/reviews/reviews.component';
 import { SimilarBoughtComponent } from './pages/product/similar-bought/similar-bought.component';
 import { RelatedProductComponent } from './pages/product/related-product/related-product.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { AccountComponent } from './pages/account/account.component';
 
 
 
@@ -77,11 +82,15 @@ import { RelatedProductComponent } from './pages/product/related-product/related
     ReviewsComponent,
     SimilarBoughtComponent,
     RelatedProductComponent,
+    LoginComponent,
+    RegisterComponent,
+    AccountComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

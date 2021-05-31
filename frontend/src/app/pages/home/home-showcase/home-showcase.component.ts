@@ -12,7 +12,7 @@ declare var JQuery: any;
   styleUrls: ['./home-showcase.component.css'],
 })
 export class HomeShowcaseComponent implements OnInit {
-  categories: Array<any> = [];
+  categories: any[] = [];
   cargando: boolean = false;
   render: boolean = true;
   constructor(

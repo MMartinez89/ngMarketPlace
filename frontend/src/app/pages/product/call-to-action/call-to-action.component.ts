@@ -9,8 +9,8 @@ import {ProductsService} from '../../../service/products.service';
 })
 export class CallToActionComponent implements OnInit {
 
-  call_to_action: Array<any> = [];
-  price: Array<any>=[];
+  call_to_action:any[] = [];
+  price: any[]=[];
   constructor(private activatedRoute:  ActivatedRoute, private productsService: ProductsService) { }
 
   ngOnInit(): void {

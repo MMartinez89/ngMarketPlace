@@ -9,7 +9,7 @@ import {StoresService} from '../../../../service/stores.service';
 export class VendorStoreComponent implements OnInit {
 
   @Input() childItem:any;
-  stores:Array<any>=[];
+  stores:any[]=[];
   constructor(private storesService: StoresService) { }
 
   ngOnInit(): void {

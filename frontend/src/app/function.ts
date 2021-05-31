@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2'
 declare var JQuery: any;
 declare var $: any;
 
@@ -473,6 +474,76 @@ export let Quantity = {
         input.trigger("change");
       });
     });
+  }
+}
+
+export let Capitalize = {
+  fnc: function(value:any){
+    value = value.toLowerCase();
+    let names = value.split(' ');
+    names = names.map((name:any) =>{
+      return name[0].toUpperCase() + name.substr(1);
+    });
+    return names.join(' ');
+  }
+}
+
+//SWEETALERT 2
+export let SweetAlert = {
+  fnc:function(type:string, text:any, url:any){
+    switch(type){
+      case "error":
+      if(url == null){
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: text,
+        })
+      }else{
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: text,
+        }).then((result)=>{
+          if(result.value){
+            window.open(url, "_top")
+          }
+        })
+      }
+      break;
+     
+      case "success":
+      if(url == null){
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: text,
+        })
+      }else{
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: text,
+        }).then((result)=>{
+          if(result.value){
+            window.open(url, "_top")
+          }
+        })
+      }
+      break;
+      case "loading":
+        Swal.fire({
+          allowOutsideClick: false,
+          title: 'loading',
+          text: text
+        })
+        Swal.showLoading()
+      break;  
+      case "close":
+        Swal.close();
+      break;
+    }
+    
   }
 }
 

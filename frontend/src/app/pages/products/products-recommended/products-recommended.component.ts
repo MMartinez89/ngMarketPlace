@@ -11,12 +11,12 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class ProductsRecommendedComponent implements OnInit {
 
-  recommendedItems:Array<any>=[];
-  render:Boolean = true;
-  rating: Array<any>=[];
-  reviews: Array<any>=[];
-  price: Array<any>=[];
-  cargando:Boolean =  false;
+  recommendedItems:any[]=[];
+  render:boolean = true;
+  rating: any[]=[];
+  reviews: any[]=[];
+  price: any[]=[];
+  cargando:boolean =  false;
 
   constructor(private productsService: ProductsService, private activatedRoute: ActivatedRoute ) { }
 
