@@ -25,3 +25,14 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Pasos para crear una aplicacion en Setting de FireBase 
+    https://firebase.google.com/docs/web/setup
+    1. CREAR UNA NUEVA APLICACION EN SETTING DE FIREBASE
+    2.npm install --save firebase
+    3. AGREGAR import firebase from "firebase/app" ;
+    4. AGREGAR import "firebase/auth";
+
+## URL para autenticarte desde facebook en fire base
+    //https://firebase.google.com/docs/auth/web/facebook-login
+
