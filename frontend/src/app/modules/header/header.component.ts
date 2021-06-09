@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import{Search} from '../../function'
 import {CategoriesService} from '../../service/categories.service';
 import {environment} from '../../../environments/environment';
-import {SubCategoriesService} from '../../service/sub-categories.service'
+import {SubCategoriesService} from '../../service/sub-categories.service';
+import {UsersService} from '../../service/users.service';
+
 
 declare var JQuery: any;
 declare var $:  any;
@@ -19,12 +21,35 @@ export class HeaderComponent implements OnInit {
   categories: any;
   arrayTitleList: any[] = [];
   render: boolean = true;
+  authValidate: boolean = false;
+  picture: string = "";
 
   constructor(private categoriesService: CategoriesService,
-              private subCategoriesService: SubCategoriesService) { 
+              private subCategoriesService: SubCategoriesService,
+              private usersService: UsersService) { 
   }
 
   ngOnInit(): void {
+    /********VALIDAR SI EXISTE EL USUARIO  */
+    this.usersService.authActivate().then(res=>{
+      if(res){
+        this.authValidate = true;
+        this.usersService.getFilterData("idToken", localStorage.getItem("idToken")).subscribe((res:any)=>{
+          
+          for(const i in res){
+            if(res[i].picture != undefined){
+              if(res[i].method != "direct"){
+                this.picture = `<img src = "${res[i].picture}" class = "img-fluid rounded-circle ml-auto">`
+              }else{
+                this.picture = `<img src = "assests/img/users/${res[i].username}/${res[i].picture}" class = "img-fluid rounded-circle ml-auto">`
+              }
+            }else{
+              this.picture = `<i class="icon-user"></i>`;
+            }
+          }
+        });
+      }
+    });
     /* TOMAMOS LA DATA DE LA CATEGORIA  */
     this.categoriesService.getData().subscribe((res:any)=>{
       this.categories =  res;

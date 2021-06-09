@@ -547,5 +547,12 @@ export let SweetAlert = {
   }
 }
 
+export let Tooltip ={
+  fnc: function(){
+    $('[data-toggle="tooltip"]').tooltip();
+  }
+}
+
+
 
 

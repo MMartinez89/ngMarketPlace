@@ -17,6 +17,7 @@ export class UsersService {
   private sendPasswordResetEmail:string = environment.sendPasswordResetEmail;
   private verifyPasswordResetCode:string = environment.verifyPasswordResetCode;
   private confirmPasswordReset:string = environment.confirmPasswordReset;
+  private changePassword:string = environment.changePassword;
 
   constructor(private httpClient: HttpClient) {
 
@@ -29,12 +30,14 @@ export class UsersService {
 
    //REGISTRO EN FIREBASE DATA BASE
    registerDataBase(user: UsersModel){
+     delete user.first_name;
+     delete user.last_name;
      delete user.password;
      delete user.returnSecureToken;
      return this.httpClient.post(`${this.fireBase}users.json`,user)
    }
 
-   getFilterData(orderBy: string, equalTo: string){
+   getFilterData(orderBy: string, equalTo: any){
     return this.httpClient.get(`${this.fireBase}users.json?orderBy="${orderBy}"&equalTo="${equalTo}"&print=pretty`);
    }
 
@@ -122,5 +125,7 @@ export class UsersService {
      return this.httpClient.post(`${this.confirmPasswordReset}`,body);
    }
 
-
+   changePasswordFnc(body: object){
+     return this.httpClient.post(`${this.changePassword}`, body)
+   }
 }

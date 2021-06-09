@@ -1,15 +1,15 @@
 export class UsersModel{
-     first_name:string;
-     last_name:string;
+     first_name?:string;
+     last_name?:string;
      displayName: string;
      username: string;
      email:string;
      password?:string;
      returnSecureToken?: boolean;
      method: string;
-     picture: string;
+     picture?: string;
      idToken?: string;
-     needConfrim: boolean;
+     needConfrim?: boolean;
      constructor(){
         this.first_name = "",
         this.last_name = "",
@@ -19,7 +19,7 @@ export class UsersModel{
         this.password = "";
         this.returnSecureToken = false
         this.method = ""
-        this.picture = "",
+        this.picture = undefined,
         this.idToken = "",
         this.needConfrim = false
      }   

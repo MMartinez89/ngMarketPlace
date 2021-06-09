@@ -36,3 +36,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## URL para autenticarte desde facebook en fire base
     //https://firebase.google.com/docs/auth/web/facebook-login
 
+## URL para autenticare desde google en fire base
+    https://firebase.google.com/docs/auth/web/google-signin
+
+## Iniciar angular con https 
+ng serve --ssl

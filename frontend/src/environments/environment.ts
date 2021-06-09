@@ -21,6 +21,10 @@ export const environment = {
   verifyPasswordResetCode:"https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=AIzaSyAwIu-uWRLt1gL_q1ajsSjoRPxQ0ck3RFw",
   //ENVIAR NUEVA CONTRASENA
   confirmPasswordReset: "https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=AIzaSyAwIu-uWRLt1gL_q1ajsSjoRPxQ0ck3RFw",
+  //Cambiar la contrasena
+  changePassword: "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyAwIu-uWRLt1gL_q1ajsSjoRPxQ0ck3RFw",
+   //Server
+   Server: "http://localhost/ngMarketPlace/frontend/src/assets/img/index.php?key=AIzaSyAwIu-uWRLt1gL_q1ajsSjoRPxQ0ck3RFw",
 };
 
 /*

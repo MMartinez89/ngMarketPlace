@@ -112,6 +112,8 @@ export class RegisterComponent implements OnInit {
   }
 
   facebookRegister(){
+    let localUserService = this.usersService;
+    let localUser = this.user;
     //PASOS https://firebase.google.com/docs/web/setup
     //1. CREAR UNA NUEVA APLICACION EN SETTING DE FIREBASE
     //2.npm install --save firebase
@@ -141,19 +143,32 @@ export class RegisterComponent implements OnInit {
     firebase.auth().signInWithPopup(provider).then((result:any) => {
       // The signed-in user info.
       var user = result.user;
+
       if(user.J){
-        let userJson = {
-          display: user.displayName,
-          emai: user.email,
+        let userModel: UsersModel = {
+          displayName: user.displayName,
+          email: user.email,
           idToken: user.b.b.h,
           method: "Facebook",
-          needConfirm: true,
-          username: user.email.split('@')[0]
+          //needConfrim: true,
+          username: user.email.split('@')[0],
+          picture: user.photoURL
         }
-        console.log(userJson)
-      }
-      
-     
+
+        //*********** EVITAR QUE SE DUPLIQUEN LOS REGISTRO EN FIREBASE DATABASE */
+
+        localUserService.getFilterData("email",user.email).subscribe((res:any)=>{
+          if(Object.keys(res).length > 0){
+            SweetAlert.fnc("error",`You are already sing, please Loading with, ${res[Object.keys(res)[0]].method} method`, "login");
+          }else{
+            localUserService.registerDataBase(userModel).subscribe((res:any)=>{
+              if(res["name"] !=""){
+                SweetAlert.fnc("success", "Place Login with Facebook", "login")
+              }
+            });
+          }
+        })   
+      }  
   })
   .catch((error) => {
     
@@ -162,6 +177,8 @@ export class RegisterComponent implements OnInit {
   });
   }
   googleRegister(){
+    let localUserService = this.usersService;
+    let localUser = this.user;
     //PASOS https://firebase.google.com/docs/web/setup
     //1. CREAR UNA NUEVA APLICACION EN SETTING DE FIREBASE
     //2.npm install --save firebase
@@ -182,6 +199,48 @@ export class RegisterComponent implements OnInit {
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     console.log(firebase);
+     
+    //****CREAR UNA INSTANCIA DEL OBJECTO PROOVEDOR DE GOOGLE */
+    var provider = new firebase.auth.GoogleAuthProvider();
+
+    //**ACCEDER A UNA VENTANA EMERGENTE  Y CON CERTIFICADO SSL (https) */
+   
+    firebase.auth().signInWithPopup(provider).then((result:any) => {
+      console.log(result)
+      // The signed-in user info.
+      var user = result.user;
+
+      if(user.J){
+        let userModel: UsersModel = {
+          displayName: user.displayName,
+          email: user.email,
+          idToken: user.b.b.h,
+          method: "Google",
+          //needConfrim: true,
+          username: user.email.split('@')[0],
+          picture: user.photoURL
+        }
+
+        //*********** EVITAR QUE SE DUPLIQUEN LOS REGISTRO EN FIREBASE DATABASE */
+
+        localUserService.getFilterData("email",user.email).subscribe((res:any)=>{
+          if(Object.keys(res).length > 0){
+            SweetAlert.fnc("error",`You are already sing, please Loading with, ${res[Object.keys(res)[0]].method} method`, "login");
+          }else{
+            localUserService.registerDataBase(userModel).subscribe((res:any)=>{
+              if(res["name"] !=""){
+                SweetAlert.fnc("success", "Place Login with Google", "login")
+              }
+            });
+          }
+        })   
+      }  
+  })
+  .catch((error) => {
+    
+    var errorMessage = error.message;
+    SweetAlert.fnc("error", errorMessage, "register" );
+  });
    
 
   }

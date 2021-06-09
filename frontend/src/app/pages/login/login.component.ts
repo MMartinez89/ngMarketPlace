@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {NgForm} from '@angular/forms'
+import firebase from "firebase/app";
+import "firebase/auth";
+
+
 import{SweetAlert}from '../../function';
 import {UsersService} from '../../service/users.service';
 import {UsersModel} from '../../models/users.model';
@@ -199,5 +203,149 @@ export class LoginComponent implements OnInit {
 
       });
     }
+  }
+
+  facebookLogin(){
+    let localUserService = this.userService;
+    let localUser = this.user;
+    //PASOS https://firebase.google.com/docs/web/setup
+    //1. CREAR UNA NUEVA APLICACION EN SETTING DE FIREBASE
+    //2.npm install --save firebase
+    //3. AGREGAR import firebase from "firebase/app" ;
+    //4. AGREGAR import "firebase/auth";
+
+    //INICIALIZAR FIREBASE EN TU PROYECTO
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAwIu-uWRLt1gL_q1ajsSjoRPxQ0ck3RFw",
+      authDomain: "marketplace-5acdd.firebaseapp.com",
+      databaseURL: "https://marketplace-5acdd-default-rtdb.firebaseio.com",
+      projectId: "marketplace-5acdd",
+      storageBucket: "marketplace-5acdd.appspot.com",
+      messagingSenderId: "307422671043",
+      appId: "1:307422671043:web:882d9e1a9290178da43276"
+    }
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    console.log(firebase);
+     //https://firebase.google.com/docs/auth/web/facebook-login
+    //****CREAR UNA INSTANCIA DEL OBJECTO PROOVEDOR DE FACEBOOK */
+    var provider = new firebase.auth.FacebookAuthProvider();
+
+    //**ACCEDER A UNA VENTANA EMERGENTE  Y CON CERTIFICADO SSL (https) */
+    // ng serve --ssl true --ssl-cert "/path/to/file.crt" --ssl-key "/path/to/file.key"
+    firebase.auth().signInWithPopup(provider).then((result:any) => {
+      // The signed-in user info.
+      var user = result.user;
+      if(user.J){
+        localUserService.getFilterData("email", user.email).subscribe((res:any)=>{
+          if(Object.keys(res).length > 0){
+            if(res[Object.keys(res)[0]].method == "Facebook"){
+              //*******ACTUALIZAMOS EL TOKEN ID */
+              let id = Object.keys(res).toString();
+              let body = {
+                idToken: user.b.b.h
+              }
+
+              localUserService.patchData(id, body).subscribe((res1:any)=>{
+                 //ALMACENAMOS EL TOKEN DE SEGURODAD EN EL LOCAL STORAGE
+                 localStorage.setItem("idToken", user.b.b.h); //setItem("item", valor a guardar) es par generar un nuevo Item
+                 //ALMACENAMOS EL EMAIL EN EL LOCAL STORAGE
+                 localStorage.setItem("email", user.email);
+                 //ALMACENAMOS LA FECHA DE EXPIRACION DEL LOCAL STORAGE
+                 let today =  new Date();
+                 today.setSeconds(3600);
+                 //today.setSeconds(30);
+                 localStorage.setItem("expiresIn", today.getTime().toString());
+
+                 //REDIRECIONAMOS AL USUARIO A LA PAGINA DE SU CUENTA 
+                 window.open("account", "_top");
+              
+             })
+           }else{
+             SweetAlert.fnc("error",`You're already sing in, please login with ${res[Object.keys(res)[0]].method} method`,"login");
+           }
+          }else{
+            SweetAlert.fnc("error","This account is not registered", "register");
+          }
+        });
+      }  
+  })
+  .catch((error) => {
+    
+    var errorMessage = error.message;
+    SweetAlert.fnc("error", errorMessage, "login" );
+  });
+  }
+
+  googleLogin(){
+    let localUserService = this.userService;
+    let localUser = this.user;
+    //PASOS https://firebase.google.com/docs/web/setup
+    //1. CREAR UNA NUEVA APLICACION EN SETTING DE FIREBASE
+    //2.npm install --save firebase
+    //3. AGREGAR import firebase from "firebase/app" ;
+    //4. AGREGAR import "firebase/auth";
+
+    //INICIALIZAR FIREBASE EN TU PROYECTO
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAwIu-uWRLt1gL_q1ajsSjoRPxQ0ck3RFw",
+      authDomain: "marketplace-5acdd.firebaseapp.com",
+      databaseURL: "https://marketplace-5acdd-default-rtdb.firebaseio.com",
+      projectId: "marketplace-5acdd",
+      storageBucket: "marketplace-5acdd.appspot.com",
+      messagingSenderId: "307422671043",
+      appId: "1:307422671043:web:882d9e1a9290178da43276"
+    }
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    console.log(firebase);
+     
+    //****CREAR UNA INSTANCIA DEL OBJECTO PROOVEDOR DE GOOGLE */
+    var provider = new firebase.auth.GoogleAuthProvider();
+
+    firebase.auth().signInWithPopup(provider).then((result:any) => {
+      // The signed-in user info.
+      var user = result.user;
+      if(user.J){
+        localUserService.getFilterData("email", user.email).subscribe((res:any)=>{
+          if(Object.keys(res).length > 0){
+            if(res[Object.keys(res)[0]].method == "Google"){
+              //*******ACTUALIZAMOS EL TOKEN ID */
+              let id = Object.keys(res).toString();
+              let body = {
+                idToken: user.b.b.h
+              }
+
+              localUserService.patchData(id, body).subscribe((res1:any)=>{
+                 //ALMACENAMOS EL TOKEN DE SEGURODAD EN EL LOCAL STORAGE
+                 localStorage.setItem("idToken", user.b.b.h); //setItem("item", valor a guardar) es par generar un nuevo Item
+                 //ALMACENAMOS EL EMAIL EN EL LOCAL STORAGE
+                 localStorage.setItem("email", user.email);
+                 //ALMACENAMOS LA FECHA DE EXPIRACION DEL LOCAL STORAGE
+                 let today =  new Date();
+                 today.setSeconds(3600);
+                 //today.setSeconds(30);
+                 localStorage.setItem("expiresIn", today.getTime().toString());
+
+                 //REDIRECIONAMOS AL USUARIO A LA PAGINA DE SU CUENTA 
+                 window.open("account", "_top");
+              
+             })
+           }else{
+             SweetAlert.fnc("error",`You're already sing in, please login with ${res[Object.keys(res)[0]].method} method`,"login");
+           }
+          }else{
+            SweetAlert.fnc("error","This account is not registered", "register");
+          }
+        });
+      }  
+    })
+    .catch((error) => {
+    
+     var errorMessage = error.message;
+     SweetAlert.fnc("error", errorMessage, "login" );
+    });
   }
 }

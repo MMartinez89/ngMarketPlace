@@ -103,7 +103,7 @@
 
                     <div class="ps-cart--mini">
 
-                    	<a class="header__extra" href="#">
+                    	<a class="header__extra" routerLink="/">
                     		<i class="icon-bag2"></i><span><i>0</i></span>
                     	</a>
 
@@ -174,7 +174,7 @@
 					Login and Register
 					======================================-->
 
-                    <div class="ps-block--user-header">
+                    <div *ngIf = "!authValidate"class="ps-block--user-header">
 
                         <div class="ps-block__left">
                         	<i class="icon-user"></i>
@@ -182,6 +182,21 @@
                         <div class="ps-block__right">
                         	<a routerLink="login">Login</a>
                         	<a routerLink="register">Register</a>
+                        </div>
+
+                    </div>
+
+                     <!--=====================================
+					Go to account
+					======================================-->
+
+                    <div *ngIf ="authValidate"class="ps-block--user-header">
+
+                        <div class="ps-block__left">
+                              <div [innerHTML] = "picture" style="width:40px"></div>   
+                        </div>
+                        <div class="ps-block__right text-right">
+                        	<a routerLink="account">My Account</a>
                         </div>
 
                     </div>
