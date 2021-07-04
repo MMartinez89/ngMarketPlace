@@ -78,7 +78,7 @@
           <div [innerHTML]= "p.specification"></div>
         </div>
 
-        <div *ngIf="p.offer != ''" class="ps-product__countdown">
+        <div *ngIf="p.offer != '' && offer" class="ps-product__countdown">
           <figure>
             <figcaption>
               Don't Miss Out! This promotion will expires in
@@ -140,7 +140,8 @@
           <a class="ps-btn" href="#">Buy Now</a>
 
           <div class="ps-product__actions">
-            <a href="#">
+            <a  style="cursor:pointer"
+              (click)="addWishList(p.url)">
               <i class="icon-heart"></i>
             </a>
           </div>

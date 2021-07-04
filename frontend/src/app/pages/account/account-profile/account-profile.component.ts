@@ -24,15 +24,18 @@ export class AccountProfileComponent implements OnInit {
   method: boolean =false;
   server:string = environment.Server;
   image: any;
+  id:any;
 
   constructor(private usersService: UsersService, private activatedRoute: ActivatedRoute, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.preLoad = true;
     //***VALIDAMOS SI EL USUARIO ESTA AUTENTICADO */
-    this.usersService.authActivate().then(res=>{
+    this.usersService.authActivate().then((res:any)=>{
+     // this.id = Object.keys(res).toString()
       if(res){
         this.usersService.getFilterData("idToken", localStorage.getItem("idToken")).subscribe((res:any)=>{
+          this.id = Object.keys(res).toString()
           for(const i in res){
             if(res[i].vendor != undefined){
               this.vendor = true;
@@ -52,7 +55,7 @@ export class AccountProfileComponent implements OnInit {
                 if(res[i].method != "direct"){
                   this.picture = res[i].picture;
                 }else{
-                  this.picture = `assets/img/users/${res[i].username}/${res[i].picture}`;
+                  this.picture = `assets/img/users/${res[i].username.toLowerCase()}/${res[i].picture}`;
                 }
               }else{
                 this.picture = `assets/img/users/default/default.png`;
@@ -157,9 +160,22 @@ export class AccountProfileComponent implements OnInit {
   }
   upLoadImage(){
     const formData = new FormData;
-    formData.append("file", this.image)
+    formData.append("file", this.image);
+    formData.append("folder", this.userName);
+    formData.append("path",'users')
+    formData.append("width","200")
+    formData.append("height","200")
     this.http.post(this.server, formData).subscribe((res:any)=>{
-      console.log("res",res)
+      if(res["status"] == 200){
+        let body = {
+          picture: res["result"]
+        }
+        this.usersService.patchData(this.id, body).subscribe((res:any)=>{
+          if(res["picture"] != ""){
+            SweetAlert.fnc("success", "You photo has been updated", "account");
+          }
+        })
+      }
     });
   }
 }

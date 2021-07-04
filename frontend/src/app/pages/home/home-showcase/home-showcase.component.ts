@@ -158,7 +158,7 @@ export class HomeShowcaseComponent implements OnInit {
                   .append(`
                     <div class="ps-product ps-product--simple" >
                       <div class="ps-product__thumbnail">
-                        <a href="products/${arrayProducts[i].url}">
+                        <a href="product/${arrayProducts[i].url}">
                           <img src="assets/img/products/${arrayProducts[i].category}/${arrayProducts[i].image}" alt="" />
                        </a>
                         ${disccount}
@@ -167,7 +167,7 @@ export class HomeShowcaseComponent implements OnInit {
 
                     <div class="ps-product__container">
                       <div class="ps-product__content" data-mh="clothing">
-                         <a class="ps-product__title" href="products/${arrayProducts[i].url}">${arrayProducts[i].name}</a>
+                         <a class="ps-product__title" href="product/${arrayProducts[i].url}">${arrayProducts[i].name}</a>
 
                     <div class="ps-product__rating">
                       <select class="ps-rating productRating" data-read-only="true">
@@ -201,7 +201,7 @@ export class HomeShowcaseComponent implements OnInit {
 
                 //IMPRIMIMOS LOS PRODUCTOS EN EL VERTICAL SLIDER
                   $(`[category-sl = "${arrayProducts[i].category}"]`).append(`
-                  <a href="products/${arrayProducts[i].url}">
+                  <a href="product/${arrayProducts[i].url}">
                   <img src="assets/img/products/${arrayProducts[i].category}/vertical/${arrayProducts[i].vertical_slider}" alt="" />
                 </a>
                 `);

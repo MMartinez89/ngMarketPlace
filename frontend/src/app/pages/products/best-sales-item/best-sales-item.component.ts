@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {OwlCarouselConfig, CarouselNavigation, Rating, DinamicPrice, DinamicRating, DinamicReviews} from '../../../function';
+import {OwlCarouselConfig, CarouselNavigation, Rating, DinamicPrice, DinamicRating, DinamicReviews,SweetAlert} from '../../../function';
 import {ProductsService} from '../../../service/products.service';
+import {UsersService}from '../../../service/users.service';
 
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 declare var JQuery:any;
 declare var $: any;
@@ -22,7 +23,7 @@ export class BestSalesItemComponent implements OnInit {
   cargando: boolean = false;
 
 
-  constructor(private productsService: ProductsService, private activatedRoute: ActivatedRoute ) { }
+  constructor(private productsService: ProductsService, private activatedRoute: ActivatedRoute, private usersService:UsersService, private router:Router ) { }
 
   ngOnInit(): void {
     this.cargando = true;
@@ -30,11 +31,13 @@ export class BestSalesItemComponent implements OnInit {
     let params = this.activatedRoute.snapshot.params["param"].split("&")[0];
 
     this.productsService.getFilterData("category",params).subscribe((res:any)=>{
+      
       if(Object.keys(res).length>0){
         for(let i in res){
           this.producFnc(res);
         }
-      }else{
+      }
+      else{
         this.productsService.getFilterData("sub_category", params).subscribe((res1:any)=>{
          this.producFnc(res1);
         });
@@ -81,4 +84,24 @@ export class BestSalesItemComponent implements OnInit {
     }
   }
 
+  //Funcion para cargar la lista de deseo
+  addWishList(product:any){
+    this.usersService.addWishList(product);
+  }
+
+  addShoppingCart(product:any, unit:any, details:any){
+
+    //Capturasmos la url
+    let url = this.router.url;
+
+    let item ={
+      product: product,
+      unit: unit,
+      details: details,
+      url: url
+    }
+
+   this.usersService.addShoppingCart(item);
+
+  }
 }

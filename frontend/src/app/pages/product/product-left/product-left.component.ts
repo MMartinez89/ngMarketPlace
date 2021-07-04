@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ProductsService} from '../../../service/products.service';
+import {UsersService} from '../../../service/users.service';
 import{DinamicPrice,DinamicRating,DinamicReviews, Rating, CountDown,ProgressBar, Tabs, SlickConfig, ProductLightbox, Quantity} from '../../../function';
 
 @Component({
@@ -22,8 +23,9 @@ export class ProductLeftComponent implements OnInit {
   video: string ="";
   tags: string = "";
   totalReviews: string ="";
+  offer:boolean =false;
 
-  constructor(private activatedRoute: ActivatedRoute, private productsService: ProductsService) { }
+  constructor(private activatedRoute: ActivatedRoute, private productsService: ProductsService, private usersService: UsersService) { }
 
   ngOnInit(): void {
     this.cargando =  true;
@@ -53,14 +55,25 @@ export class ProductLeftComponent implements OnInit {
         this.price.push(DinamicPrice.fnc(this.product[index]));
         //AGREGRAMOS LA FECHA AL DESCONTADOR
         if(this.product[index].offer != ""){
-          const date = JSON.parse(this.product[index].offer)[2];
-          this.count.push(
+          let today = new Date();
+          let offertDate = new Date(
+            parseInt(JSON.parse(this.product[index].offer)[2].split("-")[0]),
+            parseInt(JSON.parse(this.product[index].offer)[2].split("-")[1])-1,
+            parseInt(JSON.parse(this.product[index].offer)[2].split("-")[2]),
+          )
+
+          if(today < offertDate){
+            this.offer =  true;
+            const date = JSON.parse(this.product[index].offer)[2];
+            this.count.push(
             new Date(
               parseInt(date.split("-")[0]),
               parseInt(date.split("-")[1])-1,
               parseInt(date.split("-")[2]),
             )
           );
+          }
+          
         }
         //GALERY
         this.gallery.push(JSON.parse(this.product[index].gallery));
@@ -99,4 +112,11 @@ export class ProductLeftComponent implements OnInit {
       ProductLightbox.fnc();
     }
   }
+
+   //Funcion para cargar la lista de deseo
+   addWishList(product:any){
+    this.usersService.addWishList(product);
+  }
+
+
 }

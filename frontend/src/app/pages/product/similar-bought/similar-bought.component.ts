@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router'
 import {ProductsService} from '../../../service/products.service';
 import{Rating, DinamicPrice,DinamicReviews, DinamicRating} from '../../../function';
+import {UsersService} from '../../../service/users.service';
 
 @Component({
   selector: 'app-similar-bought',
@@ -16,7 +17,7 @@ export class SimilarBoughtComponent implements OnInit {
   price: any[] = [];
   render: boolean =  true;
   cargando: boolean = false;
-  constructor(private productsService: ProductsService, private activatedRoute: ActivatedRoute) { }
+  constructor(private productsService: ProductsService, private activatedRoute: ActivatedRoute, private usersService: UsersService) { }
 
   ngOnInit(): void {
     this.cargando = true;
@@ -61,5 +62,10 @@ export class SimilarBoughtComponent implements OnInit {
       },1000);
     }
   }
+
+  //Funcion para cargar la lista de deseo
+  addWishList(product:any){
+    this.usersService.addWishList(product);
+  } 
 
 }

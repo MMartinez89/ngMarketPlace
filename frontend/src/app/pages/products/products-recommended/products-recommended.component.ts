@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {OwlCarouselConfig, CarouselNavigation, Rating, DinamicReviews, DinamicRating,DinamicPrice} from '../../../function';
 import {ProductsService} from '../../../service/products.service';
 import {ActivatedRoute} from '@angular/router';
+import {UsersService} from '../../../service/users.service';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class ProductsRecommendedComponent implements OnInit {
   price: any[]=[];
   cargando:boolean =  false;
 
-  constructor(private productsService: ProductsService, private activatedRoute: ActivatedRoute ) { }
+  constructor(private productsService: ProductsService, private activatedRoute: ActivatedRoute, private usersService:UsersService ) { }
 
   ngOnInit(): void {
     //CAPTURAMOS LA VARIABLE PARAMS 
@@ -73,5 +74,10 @@ export class ProductsRecommendedComponent implements OnInit {
       Rating.fnc();
     }
   }
+
+  //Funcion para cargar la lista de deseo
+  addWishList(product:any){
+    this.usersService.addWishList(product);
+  } 
 
 }

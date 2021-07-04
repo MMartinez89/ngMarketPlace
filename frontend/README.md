@@ -41,3 +41,45 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Iniciar angular con https 
 ng serve --ssl
+
+## Dependencia de data table
+npm i angular-datatables
+npm i @types/datatables.net --save-dev
+
+## Subject
+Genera un observable(espera a que toda se carge para luego con un tigger enviarle la data a data table)
+ej:
+1. DOM
+2. Data en el DOM 
+3. Data table 
+4. Data en Data table
+
+## Trigger
+Almacena la data de los productos para luego enviarsela a data table
+
+## plice()
+La funcion plice funciona para remover un dato de un array y en sus parametros se paso el indice y cuantas quiere remover despues del indice 
+Ej:
+array = [a,b,c]
+if(b==b){
+    array.splice(indice,1)
+}
+array[a,c]
+
+## Confirmation popover
+npm install --save angular-confirmation-popover
+
+import {ConfirmationPopoverModule} from 'angular-confirmation-popover';
+
+imports: [
+    ConfirmationPopoverModule.forRoot({
+      confirmButtonType: 'danger'
+    })
+  ],
+
+## Notie alert
+Alerta para dispositivos moviles
+
+npm install notie
+
+

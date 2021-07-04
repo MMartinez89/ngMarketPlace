@@ -39,7 +39,7 @@ export class HeaderMobileComponent implements OnInit {
               if(res[i].method != "direct"){
                 this.picture = `<img src = "${res[i].picture}" class = "img-fluid rounded-circle  ml-auto">`
               }else{
-                this.picture = `<img src = "assets/img/users/${res[i].username}/${res[i].picture}" class = "img-fluid rounded-circle  ml-auto">`
+                this.picture = `<img src = "assets/img/users/${res[i].username.toLowerCase()}/${res[i].picture}" class = "img-fluid rounded-circle  ml-auto">`
               }
             }else{
               this.picture = `<i class="icon-user"></i>`;

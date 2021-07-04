@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {ProductsService} from '../../../../service/products.service';
 import {DinamicPrice} from '../../../../function';
+import {UsersService} from '../../../../service/users.service';
 
 declare var $:any;
 declare var JQuery:any;
@@ -17,7 +18,7 @@ export class BoughtToggetherComponent implements OnInit {
   price: any[]=[];
   render:boolean =  true;
 
-  constructor(private producService: ProductsService) { }
+  constructor(private producService: ProductsService, private usersService: UsersService) { }
 
   ngOnInit(): void {
     this.producService.getFilterData("title_list", this.childItem['title_list']).subscribe((res:any)=>{
@@ -36,8 +37,19 @@ export class BoughtToggetherComponent implements OnInit {
       return (b.views - a.views)
     });
     //FILTRAMOS SOLO UN PRODUCTO
+    let random = Math.floor(Math.random()*getProduct.length);
     getProduct.forEach((product,index)=>{
-      if(index < 1){
+      let notIndex =0;
+
+      if(this.childItem["name"] == product["name"]){
+        notIndex = index;
+      }
+
+      if(random == notIndex){
+        let random = Math.floor(Math.random()*getProduct.length);
+      }
+
+      if(index != notIndex && index == random){
         this.products.push(product);
       }
     });
@@ -57,6 +69,15 @@ export class BoughtToggetherComponent implements OnInit {
       }
       $('.ps-block__total strong').html(`$${total.toFixed(2)}`);
     }
+  }
+
+  addWishList(product:any, product1:any){
+    this.usersService.addWishList(product);
+    
+    let localUserService = this.usersService;
+    setTimeout(function(){
+      localUserService.addWishList(product1); 
+    },1000);
   }
 
 }

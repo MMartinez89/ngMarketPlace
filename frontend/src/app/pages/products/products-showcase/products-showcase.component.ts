@@ -1,6 +1,7 @@
 import { Component, OnInit, TestabilityRegistry } from '@angular/core';
 import {ProductsService} from '../../../service/products.service';
 import {ActivatedRoute} from '@angular/router';
+import {UsersService} from '../../../service/users.service';
 import {DinamicReviews, DinamicRating, DinamicPrice, Rating, Pagination, Select2Cofig, Tabs} from '../../../function'
 declare var Query:any;
 declare var $:any;
@@ -26,7 +27,7 @@ export class ProductsShowcaseComponent implements OnInit {
   sortItems:any[] = [];
   sortValues: any[]=[];
 
-  constructor(private productsService: ProductsService, private activatedRoute: ActivatedRoute) { }
+  constructor(private productsService: ProductsService, private activatedRoute: ActivatedRoute, private usersService: UsersService) { }
 
   ngOnInit(): void {
 
@@ -211,5 +212,10 @@ export class ProductsShowcaseComponent implements OnInit {
         });
       }
     }
+
+   //Funcion para cargar la lista de deseo
+   addWishList(product:any){
+    this.usersService.addWishList(product);
+  }
 
 }

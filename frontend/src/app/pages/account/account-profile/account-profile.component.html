@@ -1,3 +1,6 @@
+
+   
+
 <!--=====================================
                 Profile
 ======================================-->
@@ -89,12 +92,17 @@
     </div>
   </div>
 </aside>
+
 <!-- s -->
+
 
 <!-----PRELOAD-->
 <div *ngIf ="preLoad" class ="d-flex justify-content-center">
     <div class="spinner-border text-muted my-5"></div>
 </div>
+
+<!--Whish list-->
+<app-account-wishlist *ngIf ="!preLoad" class="col-12"[childItem]="id"></app-account-wishlist>
 
 <!---Modal para escribir la nueva contrasena--->
 <!-- The Modal -->

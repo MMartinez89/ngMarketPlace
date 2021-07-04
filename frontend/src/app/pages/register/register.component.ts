@@ -96,8 +96,8 @@ export class RegisterComponent implements OnInit {
           if(res["email"] == this.user.email){
             this.user.displayName = `${this.user.first_name} ${this.user.last_name}`
             this.user.method = 'direct';
-           // this.user.idToken = res["idToken"];
             this.user.needConfrim = false;
+            this.user.username = this.user.username.toLowerCase();
             //REGISTRO EN LA BASE DE DATOS DE FIREBASE
             this.usersService.registerDataBase(this.user).subscribe((res1:any)=>{ 
               SweetAlert.fnc("success", "Confirm your account in your email (check spam)", "login");

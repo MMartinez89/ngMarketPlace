@@ -24,7 +24,6 @@ export class ProductsBreadcrumbComponent implements OnInit {
               "view": Number(res[i].view+1)
             }
             this.subCategoriesService.patchData(id, value).subscribe((resp:any)=>{
-              console.log("resp",resp);
             });
        }
       }else{
@@ -36,7 +35,6 @@ export class ProductsBreadcrumbComponent implements OnInit {
               "view": Number(res1[i].view+1)
             }
             this.categoriesService.patchData(id, value).subscribe((resp:any)=>{
-              console.log("resp",resp);
             });
           }
         });

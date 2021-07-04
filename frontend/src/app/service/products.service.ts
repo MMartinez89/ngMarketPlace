@@ -39,6 +39,10 @@ export class ProductsService {
     return this.http.patch(`${this.fireBase}products/${id}.json`,value)
   }
 
+  getUniqueData(value: string){
+    return this.http.get(`${this.fireBase}products/${value}.json`);
+  }
+
   }
 
  

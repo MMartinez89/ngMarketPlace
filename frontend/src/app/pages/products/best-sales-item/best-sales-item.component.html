@@ -1,6 +1,6 @@
 <!--=====================================
     				Best Sale Items
-    				======================================-->
+ ======================================-->
 
 <div *ngIf="!cargando"class="ps-block--shop-features">
   <div class="ps-block__header">
@@ -50,7 +50,8 @@
           <ul class="ps-product__actions">
             <li>
               <a
-                href="product/{{product.url}}"
+                style= "cursor:pointer"
+                (click)="addShoppingCart(product.url, 1, [])"
                 data-toggle="tooltip"
                 data-placement="top"
                 title="Add to Cart"
@@ -72,7 +73,8 @@
 
             <li>
               <a
-                href="product/{{product.url}}"
+                style="cursor:pointer"
+                (click)="addWishList(product.url)"
                 data-toggle="tooltip"
                 data-placement="top"
                 title="Add to Whishlist"
