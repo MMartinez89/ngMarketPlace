@@ -10,6 +10,7 @@ import {
   Rating,
   ProgressBar 
 } from '../../../function';
+import { isEmpty } from 'src/app/utils/object';
 
 declare var JQuery: any;
 declare var $: any;
@@ -87,6 +88,7 @@ export class HomeHotTodayComponent implements OnInit {
         if(index < 20){
           block ++;
           this.productsSerice.getFilterData("name", sale.product).subscribe((res:any)=>{
+            
             //console.log(sale.product)
            //console.log("res",res)
             for(let i in res){
@@ -217,6 +219,7 @@ export class HomeHotTodayComponent implements OnInit {
         top20Array.push(
           topSales.slice(i*topSaleBlock.length, (i*topSaleBlock.length)+topSaleBlock.length)
         );
+        //console.log(top20Array)
         //HACEMOS UN RECORRIDO POR TOP20ARRAY
         for(let j in top20Array[i]){
           //DEFINIMOS SI EL PRECIO DEL PRODUCTO TIENE OFERTA O NO 
@@ -226,12 +229,13 @@ export class HomeHotTodayComponent implements OnInit {
           let offer;
           let offerDate;
           let today = new Date();
-          if(top20Array[i][j].offer = !""){
-            //console.log( parseInt(JSON.parse(top20Array[i][j].offer)[2].split("-")[0])
+          if(!isEmpty(top20Array[i][j].offer)) {
+           // console.log( parseInt(JSON.parse(top20Array[i][j].offer)[2].split("-")[0]));
+            //console.log(top20Array[i][j].offer)
             offerDate = new Date(
-              //parseInt(JSON.parse(top20Array[i][j].offer)[2].split("-")[0]),
-              //parseInt(JSON.parse(top20Array[i][j].offer)[2].split("-")[1])-1,
-              //parseInt(JSON.parse(top20Array[i][j].offer)[2].split("-")[2])
+              parseInt(JSON.parse(top20Array[i][j].offer)[2].split("-")[0]),
+              parseInt(JSON.parse(top20Array[i][j].offer)[2].split("-")[1])-1,
+              parseInt(JSON.parse(top20Array[i][j].offer)[2].split("-")[2])
             )
             if(today < offerDate){
               type = JSON.parse(top20Array[i][j].offer)[0];
@@ -241,8 +245,9 @@ export class HomeHotTodayComponent implements OnInit {
               if(type == "Disccount"){
                 offer = (top20Array[i][j].price - (top20Array[i][j].price * value/100)).toFixed(2);
               }
+              
               if(type == "Fixed"){
-                offer = (value).toFixed(2);
+                offer = value;
               }
          
 

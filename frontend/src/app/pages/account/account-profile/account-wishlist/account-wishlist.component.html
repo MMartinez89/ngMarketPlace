@@ -63,7 +63,11 @@
           </td>
           
           <td>
-            <a *ngIf = "product.stock > 0" class="ps-btn" href="#">Add to cart</a>
+            <a *ngIf = "product.stock > 0"
+               class="ps-btn" style="cursor: pointer" 
+               (click)="addShoppingCart(product.url, 1, [])">
+               Add to cart
+            </a>
           </td>
           
           <td>

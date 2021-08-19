@@ -5,6 +5,7 @@ import {UsersModel} from '../models/users.model'
 import {SweetAlert} from '../function';
 import {ProductsService} from './products.service';
 
+
 declare var JQuery:any;
 declare var $:any;
 
@@ -230,7 +231,22 @@ export class UsersService {
           SweetAlert.fnc("error","Out of stock",null);
           return;
         }
-      }
+
+         //Preguntamos si el Item de detalle viene vacio
+        if(item["details"].length == 0){
+          if(res[i].specification != ""){
+            let specification = JSON.parse(res[i].specification);
+            item["details"] = `[{`;
+            for(const j in specification){
+              let property = Object.keys(specification[j]).toString();
+              item["details"] += `"${property}":"${specification[j][property[0]]}",`
+            }
+            item["details"] = item["details"].slice(0, -1)//.splice(0,-1) elimina el ultimo caracter de la cadena de texto
+            item["details"] += `}]`
+          }
+        }
+      } 
+      
     });
     //Agregamos al local storage la variable del llistado de compras
     if(localStorage.getItem("list")){
@@ -241,7 +257,7 @@ export class UsersService {
        let index: any;
        for(let i in arrayList){
          
-         if(arrayList[i].product == item.product){
+         if(arrayList[i].product == item.product && arrayList[i].details.toString() == item["details"].toString()){
           count --;
           index = i;
          }else{
@@ -255,7 +271,6 @@ export class UsersService {
       }else{
         arrayList[index].unit = arrayList[index].unit +  item.unit;
       }
-    
       
       localStorage.setItem("list", JSON.stringify(arrayList));
       SweetAlert.fnc("success","Produc added to Shopping Cart",item.url);
@@ -265,5 +280,9 @@ export class UsersService {
       localStorage.setItem("list", JSON.stringify(arrayList));
       SweetAlert.fnc("success","Produc added to Shopping Cart",item.url);
     }
+   }
+
+   getCountries(){
+     return this.httpClient.get('./assets/json/country.json');
    }
 }

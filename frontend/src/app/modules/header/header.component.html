@@ -157,11 +157,12 @@
                                         </div>
 
                                         <div class="ps-product__content">
-                                        	<a class="ps-product__remove" href="#">
+                                        	<a class="ps-product__remove" style="cursor:pointer" (click)="removeProduct(product.url, product.listDetails)">
                                         		<i class="icon-cross"></i>
                                         	</a>
-                                        	<a href="product-default.html">{{product.name}}</a>
-                                            <br>
+                                        	<a href="product/{{product.url}}">{{product.name}}</a>
+
+                                            <div [innerHTML]="product.details"></div>
                                             <small class="ps-product text-left p-0 m-0">
                                                 Quantity: <span class="qShoppingHeader">{{product.quantity}}</span> * Shipping $<span class="sShoppingHeader">{{product.shipping}}</span> + <span class="pShoppingHeader" [innerHTML]="product.price"></span>
                                             </small>
@@ -174,8 +175,8 @@
 
                                     <div [innerHTML] = "subTotal"></div>
                                     <figure>
-                                    	<a class="ps-btn" href="shopping-cart.html">View Cart</a>
-                                    	<a class="ps-btn" href="checkout.html">Checkout</a>
+                                    	<a class="ps-btn" routerLink="shopping-cart">View Cart</a>
+                                    	<a class="ps-btn" routerLink = "checkout">Checkout</a>
                                     </figure>
 
                                 </div>

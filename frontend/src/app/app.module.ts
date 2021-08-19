@@ -49,6 +49,8 @@ import { AccountComponent } from './pages/account/account.component';
 import { AccountBreadcrumbComponent } from './pages/account/account-breadcrumb/account-breadcrumb.component';
 import { AccountProfileComponent } from './pages/account/account-profile/account-profile.component';
 import { AccountWishlistComponent } from './pages/account/account-profile/account-wishlist/account-wishlist.component';
+import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.component';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
 
 
 @NgModule({
@@ -92,6 +94,8 @@ import { AccountWishlistComponent } from './pages/account/account-profile/accoun
     AccountBreadcrumbComponent,
     AccountProfileComponent,
     AccountWishlistComponent,
+    ShoppingCartComponent,
+    CheckoutComponent,
   ],
   imports: [
     BrowserModule,

@@ -14,7 +14,7 @@
           <div class="ps-product__shopping">
            <div class="p-0 mr-5" [innerHTML]="price[i]"></div>
 
-            <a class="ps-btn" routerLink="#"> Add to Cart</a>
+            <a class="ps-btn" style="cursor:pointer" (click)="addShoppingCart(product.url, 1, [])"> Add to Cart</a>
           </div>
         </div>
       </article>

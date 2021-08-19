@@ -1,6 +1,7 @@
-import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ProductsService} from '../../../service/products.service';
+import {UsersService} from '../../../service/users.service';
 
 @Component({
   selector: 'app-call-to-action',
@@ -11,7 +12,10 @@ export class CallToActionComponent implements OnInit {
 
   call_to_action:any[] = [];
   price: any[]=[];
-  constructor(private activatedRoute:  ActivatedRoute, private productsService: ProductsService) { }
+  constructor(private activatedRoute:  ActivatedRoute, 
+              private productsService: ProductsService,
+              private usersService: UsersService,
+              private router: Router) { }
 
   ngOnInit(): void {
     let params = this.activatedRoute.snapshot.params["param"];
@@ -48,6 +52,22 @@ export class CallToActionComponent implements OnInit {
     });
   
   
+  }
+
+  addShoppingCart(product:any, unit:any, details:any){
+
+    //Capturasmos la url
+    let url = this.router.url;
+
+    let item ={
+      product: product,
+      unit: unit,
+      details: details,
+      url: url
+    }
+
+   this.usersService.addShoppingCart(item);
+
   }
 
 }

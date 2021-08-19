@@ -2,7 +2,8 @@ import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { CategoriesService } from '../../../service/categories.service';
 import { SubCategoriesService } from '../../../service/sub-categories.service';
 import { ProductsService } from '../../../service/products.service';
-import {OwlCarouselConfig,Rating} from '../../../function'
+import {OwlCarouselConfig,Rating} from '../../../function';
+import {isEmpty} from '../../../utils/object'
 declare var $: any;
 declare var JQuery: any;
 
@@ -74,7 +75,7 @@ export class HomeShowcaseComponent implements OnInit {
         this.productsService
           .getFilterDataWithLimit('category', category.url, 6)
           .subscribe((res: any) => {
-            //console.log(res)
+            //console.log("res",res)
             for (let i in res) {
               //console.log("ijlk", res[i].offer)
               arrayProducts.push({
@@ -89,6 +90,7 @@ export class HomeShowcaseComponent implements OnInit {
                 vertical_slider: res[i].vertical_slider,
               });
             }
+            //console.log("aqui",arrayProducts)
            
             //RECORREMOS EL ARRAY PARA BUSCAR COINCIDENCIAS CON LAS CATEGORIAS
             for (let i in arrayProducts) {
@@ -102,12 +104,11 @@ export class HomeShowcaseComponent implements OnInit {
                 let offerDate;
                 let today = new Date();
 
-
-                if(arrayProducts[i].offer = !""){
+                if(!isEmpty(arrayProducts[i].offer = !"")){
                   offerDate = new Date(
-                   // parseInt(JSON.parse(arrayProducts[i].offer)[2].split("-")[0]),
-                   // parseInt(JSON.parse(arrayProducts[i].offer)[2].split("-")[1])-1,
-                   // parseInt(JSON.parse(arrayProducts[i].offer)[2].split("-")[2])
+                    //parseInt(JSON.parse(arrayProducts[i].offer)[2].split("-")[0]),
+                    //parseInt(JSON.parse(arrayProducts[i].offer)[2].split("-")[1])-1,
+                    //parseInt(JSON.parse(arrayProducts[i].offer)[2].split("-")[2])
                   )
                    if(today<offerDate){
                      //console.log(arrayProducts[i].offer )

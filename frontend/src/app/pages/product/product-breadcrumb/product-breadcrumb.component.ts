@@ -18,7 +18,6 @@ export class ProductBreadcrumbComponent implements OnInit {
     this.productsService.getFilterData("url",this.activatedRoute.snapshot.params["param"]).subscribe((res:any)=>{
       for(const i in res){
         let id = Object.keys(res).toString();
-        console.log(id);
         let value = {
           "views": Number(res[i].views+1)
         }

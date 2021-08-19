@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router'
+import {ActivatedRoute, Router} from '@angular/router'
 import {ProductsService} from '../../../service/products.service';
 import{Rating, DinamicPrice,DinamicReviews, DinamicRating, OwlCarouselConfig, CarouselNavigation} from '../../../function';
 import { UsersService} from '../../../service/users.service';
@@ -17,7 +17,10 @@ export class RelatedProductComponent implements OnInit {
   price: any[] = [];
   render: boolean =  true;
   cargando: boolean = false;
-  constructor(private productsService: ProductsService, private activatedRoute: ActivatedRoute, private usersService: UsersService) { }
+  constructor(private productsService: ProductsService, 
+              private activatedRoute: ActivatedRoute, 
+              private usersService: UsersService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.cargando = true;
@@ -70,4 +73,19 @@ export class RelatedProductComponent implements OnInit {
     this.usersService.addWishList(product);
   }
 
+  addShoppingCart(product:any, unit:any, details:any){
+
+    //Capturasmos la url
+    let url = this.router.url;
+
+    let item ={
+      product: product,
+      unit: unit,
+      details: details,
+      url: url
+    }
+
+   this.usersService.addShoppingCart(item);
+
+  }
 }

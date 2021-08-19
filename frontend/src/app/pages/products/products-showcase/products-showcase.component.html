@@ -62,7 +62,8 @@
                 <ul class="ps-product__actions">
                   <li>
                     <a
-                      href="product/{{product.url}}"
+                    style= "cursor:pointer"
+                    (click)="addShoppingCart(product.url, 1, [])"
                       data-toggle="tooltip"
                       data-placement="top"
                       title="Add to Cart"

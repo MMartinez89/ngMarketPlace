@@ -3,6 +3,7 @@ import {UsersService} from '../../../../service/users.service';
 import {ProductsService} from '../../../../service/products.service';
 import {DinamicPrice, SweetAlert} from '../../../../function';
 import {Subject,} from 'rxjs';
+import {Router} from '@angular/router'
 //@ts-ignore
 import notie from 'notie';
 //@ts-ignore
@@ -28,7 +29,7 @@ dtTrigger: Subject<any> = new Subject();
 render:boolean = true;
 popoverMessage: string = "Are you sure to remove it?";
 
-  constructor(private usersService: UsersService, private productsService: ProductsService) { }
+  constructor(private usersService: UsersService, private productsService: ProductsService, private router:Router) { }
 
   ngOnInit(): void {
     //Agregamos lsa opciones de Data Tables
@@ -154,6 +155,22 @@ popoverMessage: string = "Are you sure to remove it?";
     }
   }
 
+  addShoppingCart(product:any, unit:any, details:any){
+
+    //Capturasmos la url
+    let url = this.router.url;
+
+    let item ={
+      product: product,
+      unit: unit,
+      details: details,
+      url: url
+    }
+
+   this.usersService.addShoppingCart(item);
+
+  }
+
   ngOnDestroy():void{
     this.dtTrigger.unsubscribe();
   }
@@ -185,6 +202,8 @@ popoverMessage: string = "Are you sure to remove it?";
           this.dtTrigger.next();
         });
   }*/
+
+ 
 
 
 }

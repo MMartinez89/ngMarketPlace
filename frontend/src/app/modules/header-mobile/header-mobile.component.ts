@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {Search} from '../../function';
+import {Search, DinamicPrice, SweetAlert} from '../../function';
 import {CategoriesService} from '../../service/categories.service';
 import {environment} from '../../../environments/environment';
 import {SubCategoriesService} from '../../service/sub-categories.service';
 import {UsersService} from '../../service/users.service';
+import {ProductsService} from '../../service/products.service';
+import {Router} from '@angular/router';
 
 declare var JQuery:any;
 declare var $:any;
@@ -21,9 +23,15 @@ export class HeaderMobileComponent implements OnInit {
    categoriesList:any[] = [];
    authValidate: boolean = false;
    picture: string = "";
+   totalShoppingCart = 0;
+   shoppingCart: any[] = [];
+   subTotal:string = `<h3>Sub Total:<strong class="subTotalHeader"><div class="spinner-border"></div></strong></h3>`;
+   renderShopping =  true;
   constructor(private categoriaService: CategoriesService,
               private subCategoriesService: SubCategoriesService,
-              private usersService: UsersService) { }
+              private usersService: UsersService,
+              private productsService: ProductsService,
+              private router: Router) { }
 
   ngOnInit(): void {
 
@@ -65,6 +73,55 @@ export class HeaderMobileComponent implements OnInit {
       //.childer() va al hijo 
       $(this).parent().children('ul').toggle();  
     });
+    //Tomamos la data del carrito de compras 
+    if(localStorage.getItem("list")){
+      let list = JSON.parse(localStorage.getItem("list") || '{}')
+      this.totalShoppingCart = list.length;
+      for(let i in list){
+        //Filtramos los productos del carrito de compras
+        this.productsService.getFilterData("url", list[i].product).subscribe((res:any)=>{
+          for(const f in res){
+            let details = `<div class="list-details small text-secundary">`;
+
+            if(list[i].details.length > 0){
+              let specification = JSON.parse(list[i].details);
+              
+              for(const i in specification){
+                let property = Object.keys(specification[i]);
+                for(const j in property){
+                  details += `<div>${property[j]}: ${specification[i][property[j]]}</div>`
+                }
+              }
+            }else{
+              //Mostrar detalle por defecto
+              if(res[f].specifitacion != ""){
+                let specification =  JSON.parse(res[f].specification);
+                for(const i in specification){
+                  let property = Object.keys(specification[i]).toString();
+                  details += `<div>${property}: ${specification[i][property][0]}</div>`
+                }
+              }
+            }
+
+            details+= `</div>`
+
+            this.shoppingCart.push({
+              url: res[f].url,
+              name: res[f].name,
+              category: res[f].category,
+              image: res[f].image,
+              delivery_time: res[f].delivery_time,
+              quantity: list[i].unit,
+              price: DinamicPrice.fnc(res[f])[0],
+              shipping: Number(res[f].shipping)*Number(list[i].unit),
+              details: details,
+              listDetails: list[i].details
+            });
+          }
+        });
+      }
+
+    }
   }
   goSearch(search:String){
 
@@ -107,6 +164,49 @@ export class HeaderMobileComponent implements OnInit {
           }
         });
      });
+    }
+  }
+
+  callbackShopping(){
+    if(this.renderShopping){
+     this.renderShopping = false 
+     
+     //Sumar valores para el precio total
+     let totalProduct = $(".ps-product--cart-mobile")
+
+     setTimeout(function(){
+      let price = $(".pShoppingHeaderM .end-price");
+      let quantity = $(".qShoppingHeaderM");
+      let shipping = $(".sShoppingHeaderM");
+
+      let totalPrice = 0;
+ 
+      for(let i=0; i < price.length; i++){
+
+      //Sumar precio con envio
+
+        let shipping_price = Number($(price[i]).html()) + Number($(shipping[i]).html());
+
+        totalPrice =  totalPrice + Number($(quantity[i]).html())*shipping_price;
+
+      }
+      $(".subTotalHeader").html(`$${totalPrice.toFixed(2)}`);
+     },totalProduct.length * 500);
+   
+    }
+  }
+
+  removeProduct(product:string, details:any){
+    if(localStorage.getItem("list")){
+      let shoppingCart = JSON.parse(localStorage.getItem("list") || "{}");
+      shoppingCart.forEach((list:any, index:any)=>{
+        if(list.product == product && list.details == details.toString()){
+          shoppingCart.splice(index, 1);
+        }
+      })
+      //Actualizamos en el LocalStoreage la lista del carrito de compras
+      localStorage.setItem("list", JSON.stringify(shoppingCart));
+      SweetAlert.fnc("success","product removed", this.router.url)
     }
   }
 

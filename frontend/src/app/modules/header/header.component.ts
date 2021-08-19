@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import{Search, DinamicPrice} from '../../function'
+import{Search, DinamicPrice, SweetAlert} from '../../function'
 import {CategoriesService} from '../../service/categories.service';
 import {environment} from '../../../environments/environment';
 import {SubCategoriesService} from '../../service/sub-categories.service';
 import {UsersService} from '../../service/users.service';
 import {ProductsService}from '../../service/products.service';
+import {Router} from '@angular/router'
 
 
 declare var JQuery: any;
@@ -32,7 +33,8 @@ export class HeaderComponent implements OnInit {
   constructor(private categoriesService: CategoriesService,
               private subCategoriesService: SubCategoriesService,
               private usersService: UsersService,
-              private producstService: ProductsService) { 
+              private producstService: ProductsService,
+              private router: Router) { 
   }
 
   ngOnInit(): void {
@@ -87,6 +89,31 @@ export class HeaderComponent implements OnInit {
         //Filtramos los productos del carrito de compras
         this.producstService.getFilterData("url", list[i].product).subscribe((res:any)=>{
           for(const f in res){
+
+            let details = `<div class="list-details small text-secundary">`;
+
+            if(list[i].details.length > 0){
+              let specification = JSON.parse(list[i].details);
+              
+              for(const i in specification){
+                let property = Object.keys(specification[i]);
+                for(const j in property){
+                  details += `<div>${property[j]}: ${specification[i][property[j]]}</div>`
+                }
+              }
+            }else{
+              //Mostrar detalle por defecto
+              if(res[f].specifitacion != ""){
+                let specification =  JSON.parse(res[f].specification);
+                for(const i in specification){
+                  let property = Object.keys(specification[i]).toString();
+                  details += `<div>${property}: ${specification[i][property][0]}</div>`
+                }
+              }
+            }
+
+            details+= `</div>`
+
             this.shoppingCart.push({
               url: res[f].url,
               name: res[f].name,
@@ -96,6 +123,8 @@ export class HeaderComponent implements OnInit {
               quantity: list[i].unit,
               price: DinamicPrice.fnc(res[f])[0],
               shipping: Number(res[f].shipping)*Number(list[i].unit),
+              details: details,
+              listDetails: list[i].details
             });
           }
         });
@@ -181,10 +210,23 @@ export class HeaderComponent implements OnInit {
         totalPrice =  totalPrice + Number($(quantity[i]).html())*shipping_price;
 
       }
-      console.log("total", totalPrice);
-      $(".subTotalHeader").html(`$${totalPrice}`);
+      $(".subTotalHeader").html(`$${totalPrice.toFixed(2)}`);
      },totalProduct.length * 500);
    
+    }
+  }
+
+  removeProduct(product:string, details: any){
+    if(localStorage.getItem("list")){
+      let shoppingCart = JSON.parse(localStorage.getItem("list") || "{}");
+      shoppingCart.forEach((list:any, index:any)=>{
+        if(list.product == product && list.details == details.toString()){
+          shoppingCart.splice(index, 1);
+        }
+      })
+      //Actualizamos en el LocalStoreage la lista del carrito de compras
+      localStorage.setItem("list", JSON.stringify(shoppingCart));
+      SweetAlert.fnc("success","product removed", this.router.url)
     }
   }
 
