@@ -5,6 +5,7 @@ import {UsersModel} from '../../models/users.model';
 import {  UsersService} from '../../service/users.service';
 import {SweetAlert} from '../../function';
 
+
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -17,6 +18,7 @@ export class CheckoutComponent implements OnInit {
   saveAddress: boolean = false;
   countries:any = null;
   dialCode:string = "";
+  country_code:string ="";
 
   constructor( private router: Router, private usersService: UsersService) { 
    this.user= new UsersModel();
@@ -34,9 +36,13 @@ export class CheckoutComponent implements OnInit {
             this.user.username = res[i].username;
             this.user.email = res[i].email;
             this.user.country = res[i].country;
+            //this.user.country_code = res[i].country_code,
             this.user.city = res[i].city;
-            this.user.phone = res[i].phone;
-            this.user.address = res[i].adrress;
+            if(res[i].phone != undefined){
+              this.dialCode = res[i].phone.split("-")[0];
+              this.user.phone = res[i].phone.split("-")[1];
+            }
+            this.user.address = res[i].address;
 
             //Listado de paises
 
@@ -69,8 +75,9 @@ export class CheckoutComponent implements OnInit {
 
         let body ={
           country: this.user.country,
+          country_code: this.user.country_code,
           city: this.user.city,
-          phone: this.user.phone,
+          phone: `${this.dialCode}-${this.user.phone}`,
           address: this.user.address
         }
         this.usersService.patchData(this.id, body).subscribe((res:any)=>{
